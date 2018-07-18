@@ -2,17 +2,11 @@
 // token in api.txt
 const fs = require('fs');
 const fetch = require('node-fetch');
-
-function logger(err) {
-    const log = (new Date()) + ' - ' + err + '\r\n';
-    fs.appendFile('error.log', log, 'utf8', function (err) {
-        if (err) throw err;
-    })
-}
+const {logger} =  require('./logger');
 
 fs.readFile('./api.txt', 'utf8', function (err, data) {
-    if (err) logger(err);
-    getNews(data.match(/API_TOKEN=(.*?);/)[1]);
+    if (err) logger(err, 'error');
+    else getNews(data.match(/API_TOKEN=(.*?);/)[1]);
 });
 
 
