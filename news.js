@@ -3,21 +3,22 @@
 const fs = require('fs');
 const fetch = require('node-fetch');
 const {logger} =  require('./logger');
-
+/*
 fs.readFile('./api.txt', 'utf8', function (err, data) {
     if (err) logger(err, 'error');
     else getNews(data.match(/API_TOKEN=(.*?);/)[1]);
 });
+*/
 
-
-function getNews(token) {
+exports.getNews = function(country, next) {
+    const token = '6da9c0184c7048ae9245ff3898989e75';
     const url = 'https://newsapi.org/v2/top-headlines?' +
-        'country=ua&' +
-        'apiKey=' + token;
+        'country=' +country+
+        '&apiKey=' + token;
 
     fetch(url)
         .then(res => res.json())
-        .then(data => console.log(data));
+        .then(next);
 }
 
 
