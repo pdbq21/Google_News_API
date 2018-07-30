@@ -2,7 +2,7 @@ const express = require('express');
 const maxmind = require('maxmind');
 const server = express();
 const {logger} = require('./logger');
-const {getNews} = require('./news')
+const {getNews} = require('./news');
 const PORT = process.env.PORT || 3000;
 
 function getCountryCode(ip, next) {
@@ -26,15 +26,12 @@ function getCountryCode(ip, next) {
         logger(log, 'ip');
         next(log);
     }
-    // return ipInfo || 'not found information';
 }
 
 server.get('/', (req, res) => {
     const ip = req.headers['x-forwarded-for'].replace(/,.*/, '') || req.connection.remoteAddress;
-    // const ip = '178.92.82.228';
-    getCountryCode(ip, data => {
-        res.send(data);
-    });
+     //const ip = '180.90.80.220';
+    getCountryCode(ip, data => res.send(data));
 });
 
 server.listen(PORT, function () {
